@@ -39,23 +39,27 @@ def newpost():
             return render_template('newpost.html', body_error=body_error)      
         else:
             new_blog = Blog(blog_title, blog_body)
-            blogs = Blog.query.filter_by().all()
             db.session.add(new_blog)
             db.session.commit()
             newID = new_blog.id
             redirect_str = "?"+ "id=" + str(newID)
 
-            return redirect('/blog' + redirect_str)
+        return redirect('/blog' + redirect_str)
+        
+                
     return render_template('newpost.html')
 
       
 @app.route('/blog', methods=['POST', 'GET'])
 def blog():
-    if request.method == 'POST':
+    if request.args:
+        blog_id = request.args.get('id')
+        blog = Blog.query.get(blog_id)
         return render_template('singleblog.html', blog=blog)
-    else:
-        blogs = Blog.query.filter_by().all()
-        return render_template('blog.html', blog=blog)
+    else:   
+        
+        blog = Blog.query.all()
+        return render_template('blog.html', blogs=blog)
 
     
 @app.route('/', methods=['POST', 'GET'])
