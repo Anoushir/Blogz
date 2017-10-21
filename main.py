@@ -3,10 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blog-post:AcuraRSX1@localhost:8889/blog-post'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blogz:root@localhost:8889/blogz'
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
-
 
 class Blog(db.Model):
    
@@ -20,7 +19,9 @@ class Blog(db.Model):
         self.title = title
         self.body = body
 
-
+##@app.route('index')
+#@app.route('login')
+#@app.route('signup')
 @app.route('/newpost', methods=['POST', 'GET'])
 def newpost():
     
